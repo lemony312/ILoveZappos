@@ -4,11 +4,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.ViewParent;
+
 import com.example.louis.ilovezappos.R;
 import com.example.louis.ilovezappos.Util.L;
 
@@ -46,6 +51,28 @@ public class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(b);
     }
 
+    private Drawable whiteArrow;
+
+    public void setupWhiteActionBar() {
+        if (toolbar == null) {
+            return;
+        }
+        toolbar.setTitleTextColor(ResourcesCompat.getColor(getResources(), R.color.black, getTheme()));
+        toolbar.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
+
+        ViewParent parent = toolbar.getParent();
+        while (!(parent instanceof CoordinatorLayout)) {
+            parent = parent.getParent();
+        }
+
+
+        if (whiteArrow == null) {
+            whiteArrow = toolbar.getNavigationIcon();
+        }
+
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow_blue);
+    }
+
     protected void setToolBarTitle(String str) {
         toolbar.setTitle(str);
     }
@@ -68,6 +95,4 @@ public class BaseActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
-
 }

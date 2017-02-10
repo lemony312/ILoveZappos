@@ -33,7 +33,7 @@ public class SearchZappos extends BaseActivity implements  View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_zappos);
         setShowUpButton(true);
-
+        setupWhiteActionBar();
         search = (EditText) findViewById(R.id.et_search);
         search.addTextChangedListener(filterTextWatcher);
         search.setOnKeyListener(new View.OnKeyListener() {
@@ -42,9 +42,8 @@ public class SearchZappos extends BaseActivity implements  View.OnClickListener{
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
 
-
                     Intent returnIntent = new Intent();
-                    returnIntent.putExtra("REQUEST_TERM_SEARCH",  search.getText().toString());
+                    returnIntent.putExtra(REQUEST_TERM_SEARCH,  search.getText().toString());
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                     return true;
@@ -85,5 +84,11 @@ public class SearchZappos extends BaseActivity implements  View.OnClickListener{
         else if(view == vgClose){
             finish();
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, android.R.anim.slide_out_right);
     }
 }

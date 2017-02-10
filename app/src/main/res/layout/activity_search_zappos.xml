@@ -46,12 +46,12 @@
                     android:drawableLeft="@drawable/ic_magnifying_glass"
                     android:drawableStart="@drawable/ic_magnifying_glass"
                     android:drawablePadding="10dp"
-                    android:paddingLeft="-25dp"
+                    android:paddingLeft="-20dp"
                     android:singleLine="true"
                     android:maxLines="1"
                     android:layout_gravity="center_vertical"
                     android:hint="@string/search_by_item"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/greyish"
                     android:layout_toLeftOf="@id/delete_from_search_ed"/>
             </RelativeLayout>

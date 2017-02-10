@@ -3,16 +3,13 @@ package com.example.louis.ilovezappos.ui.productpage.view;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
-
 import com.example.louis.ilovezappos.R;
-import com.example.louis.ilovezappos.Util.L;
 import com.example.louis.ilovezappos.bindingobject.Product;
 import com.example.louis.ilovezappos.databinding.FragmentProductPageBinding;
 import com.example.louis.ilovezappos.framework.BaseFragment;
@@ -120,10 +117,21 @@ public class ProductPageFragment extends BaseFragment implements  View.OnClickLi
     }
 
     @Override
-    public void onProductLoaded(ZapposProduct zapposProduct) {
-        if(zapposProduct != null) {
+    public void onProductLoaded(ZapposProduct zapposProduct, boolean noResults) {
+        if(!noResults) {
             Product p = new Product(zapposProduct, getContext());
             binding.setProduct(p);
         }
+        else{
+
+        }
+    }
+
+    @Override
+    public void onProductLoadError(String errMsg) {
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getContext(), errMsg, duration);
+        toast.show();
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 }

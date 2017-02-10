@@ -8,5 +8,6 @@ import com.example.louis.ilovezappos.rest.model.ZapposProduct;
  */
 
 public interface IProductView extends IView{
-    void onProductLoaded(ZapposProduct zapposProduct);
+    void onProductLoaded(ZapposProduct zapposProduct, boolean noResults);
+    void onProductLoadError(String errMsg);
 }

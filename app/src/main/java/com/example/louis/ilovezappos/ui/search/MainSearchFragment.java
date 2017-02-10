@@ -70,6 +70,7 @@ public class MainSearchFragment extends BaseFragment implements  View.OnClickLis
         if(view == vgSearchBar){
             Intent intent = new Intent(getActivity(), SearchZappos.class);
             startActivityForResult(intent, REQUEST_CODE_SEARCH);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, android.R.anim.fade_out);
         }
     }
 

@@ -1,7 +1,15 @@
 package com.example.louis.ilovezappos.Util;
 
+import android.content.Context;
+
 import com.example.louis.ilovezappos.app.Config;
 import com.example.louis.ilovezappos.rest.service.ZapposService;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -89,7 +97,42 @@ public class NetworkUtil {
         }
         return map;
     }
+    public static String getErrorMsg(retrofit2.Response response) {
+        Gson gson = new Gson();
+        String msg = response.code() + " " + response.message();
+        try {
+            String jsonStr = response.errorBody().string();
+            JsonElement jsonElement = gson.fromJson(jsonStr, JsonElement.class);
+            if(jsonElement != null) {
+                if(jsonElement.isJsonObject()) {
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+                    JsonElement je = jsonObject.get("_debug");
+                    if (je != null) {
+                        je = je.getAsJsonObject().get("messages");
+                        if (je != null) {
+                            je = je.getAsJsonObject().get("errors");
+                            if (je != null) {
+                                JsonArray jsonArray = je.getAsJsonArray();
+                                if (jsonArray != null && jsonArray.size() > 0) {
+                                    msg += " : " + jsonArray.get(jsonArray.size() - 1).getAsString();
+                                }
+                            }
+                        }
+                    }
+                } else if (jsonElement.isJsonPrimitive()) {
+                    JsonPrimitive jp = jsonElement.getAsJsonPrimitive();
+                    msg += jp.getAsInt();
+                }
 
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } catch (JsonSyntaxException e1) {
+
+        }
+
+        return msg;
+    }
 
 }
 

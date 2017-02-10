@@ -3,6 +3,7 @@ package com.example.louis.ilovezappos.mvpmodel;
 import android.support.annotation.NonNull;
 
 import com.example.louis.ilovezappos.framework.IModel;
+import com.example.louis.ilovezappos.framework.ModelResponse;
 import com.example.louis.ilovezappos.rest.model.ZapposProduct;
 
 import java.util.List;
@@ -13,8 +14,8 @@ import java.util.List;
 
 public interface IProductModel extends IModel{
     @NonNull
-    List<ZapposProduct> getAllProductsFromServer(String term);
+    ModelResponse<List<ZapposProduct>> getAllProductsFromServer(String term);
 
     @NonNull
-    ZapposProduct getFirstZapposProduct(String term);
+    ModelResponse<ZapposProduct> getFirstZapposProduct(String term);
 }

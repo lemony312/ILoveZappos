@@ -1,6 +1,6 @@
 package com.example.louis.ilovezappos.ui.productpage.presenter;
 
-import com.example.louis.ilovezappos.Util.L;
+import com.example.louis.ilovezappos.framework.ModelResponse;
 import com.example.louis.ilovezappos.framework.PresenterFragmentImpl;
 import com.example.louis.ilovezappos.mvpmodel.IProductModel;
 import com.example.louis.ilovezappos.rest.model.ZapposProduct;
@@ -22,39 +22,41 @@ public class ProductPresenterImpl extends PresenterFragmentImpl<IProductView, IP
     @Override
     public void loadProducts(final String term) {
 
-        Subscription sub = Observable.create(new Observable.OnSubscribe<ZapposProduct>() {
+        Subscription sub = Observable.create(new Observable.OnSubscribe<ModelResponse<ZapposProduct>>() {
             @Override
-            public void call(Subscriber<? super ZapposProduct> subscriber) {
-                ZapposProduct response = mIModel.getFirstZapposProduct(term);
+            public void call(Subscriber<? super ModelResponse<ZapposProduct>> subscriber) {
+                ModelResponse<ZapposProduct> response = mIModel.getFirstZapposProduct(term);
                 subscriber.onNext(response);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ZapposProduct>() {
+                .subscribe(new Observer<ModelResponse<ZapposProduct>>() {
                     @Override
                     public void onCompleted() {
 
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(Throwable e) { // shouldnt be called
                         e.printStackTrace();
-                        mIView.onProductLoaded(null);
+                        mIView.onProductLoadError("Error, Please try again later");
                     }
 
                     @Override
-                    public void onNext(ZapposProduct zapposProduct) {
-                       if(zapposProduct != null){
-                           L.tmp(zapposProduct.getProductName());
-                           mIView.onProductLoaded(zapposProduct);
-                       }
+                    public void onNext(ModelResponse<ZapposProduct> zapposProduct) {
+                        if(zapposProduct.isSuccessful()){
+                            if(zapposProduct.getData() != null){
+                                mIView.onProductLoaded(zapposProduct.getData(), false);
+                            }
+                            else{
+                                mIView.onProductLoaded(null, true);
+                            }
+                        }
                         else{
-                           L.tmp("failed");
-                           mIView.onProductLoaded(null);
+                           mIView.onProductLoadError(zapposProduct.getErrorMsg());
                        }
                     }
                 });
         addSubscription(sub);
-
     }
 }
