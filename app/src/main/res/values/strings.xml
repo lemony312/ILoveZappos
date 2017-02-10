@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ILoveZappos</string>
+    <string name="action_settings">Settings</string>
+    <string name="search_text_title">Search for anything!</string>
+    <string name="title_activity_search_zappos">Search Zappos</string>
+    <string name="search_by_item">Search For Everything</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+</resources>
