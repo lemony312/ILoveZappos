@@ -112,18 +112,16 @@ public class ProductPageFragment extends BaseFragment implements  View.OnClickLi
     }
 
     @Override
-    protected boolean hideToolbar() {
-        return true;
-    }
-
-    @Override
     public void onProductLoaded(ZapposProduct zapposProduct, boolean noResults) {
         if(!noResults) {
             Product p = new Product(zapposProduct, getContext());
             binding.setProduct(p);
         }
         else{
-
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(getContext(), "Sorry, there are no results for your search", duration);
+            toast.show();
+            getActivity().getSupportFragmentManager().popBackStack();
         }
     }
 

@@ -61,12 +61,12 @@ public class MainActivity extends BaseActivity implements IMainActivity, MainSea
         if (hideToolbar) {
             findViewById(R.id.app_bar_layout_from_main).setVisibility(View.GONE);// hide actionbar
             findViewById(R.id.coordinator_layout_from_main).setFitsSystemWindows(fitsSystemWindows);// make content under statusbar
-            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) findViewById(R.id.app_bar_layout_from_main).getLayoutParams();
+            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) findViewById(R.id.content_main).getLayoutParams();
             params.setBehavior(null);
         } else {
             findViewById(R.id.app_bar_layout_from_main).setVisibility(View.VISIBLE);
             findViewById(R.id.coordinator_layout_from_main).setFitsSystemWindows(fitsSystemWindows);
-            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) findViewById(R.id.app_bar_layout_from_main).getLayoutParams();
+            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) findViewById(R.id.content_main).getLayoutParams();
             params.setBehavior(new AppBarLayout.ScrollingViewBehavior());
 
         }
