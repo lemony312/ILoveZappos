@@ -1,0 +1,6 @@
+In app/config.java there are constants such as debug mode which can be changed to see logging in network calls as well as in other internal logic
+This project uses the MVP archetecture pattern for the presentation layer logic. 
+Each view implements an IModel, IView, and IPresenter class.
+This app uses RxJava and retrofit2 for network handling which uses the observer pattern. 
+This app also uses Picasso for image loading. 
+Databinding has also been incorperated into the views under ui/search package.
